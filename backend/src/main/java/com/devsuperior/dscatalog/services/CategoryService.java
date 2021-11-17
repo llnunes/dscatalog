@@ -34,4 +34,12 @@ public class CategoryService {
 		Category category = opt.orElseThrow(() -> new EntityNotFoundException("Erro ao recuperar Categoria"));
 		return new CategoryDTO(category);				
 	}
+	
+	@Transactional
+	public CategoryDTO insert(CategoryDTO dto) {
+		Category c = new Category();
+		c.setName(dto.getName());
+		categoryRepository.save(c);
+		return new CategoryDTO(c);
+	}
 }
