@@ -44,7 +44,7 @@ public class CategoryService {
 	@Transactional(readOnly = true)
 	public CategoryDTO findById(Long id) {
 		Optional<Category> opt= categoryRepository.findById(id);
-		Category category = opt.orElseThrow(() -> new EntityNotFoundException("Erro ao recuperar Categoria"));
+		Category category = opt.orElseThrow(() -> new ResourceNotFoundException("Erro ao recuperar Categoria"));
 		return new CategoryDTO(category);				
 	}
 	
