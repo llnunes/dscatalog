@@ -42,7 +42,7 @@ public class ProductService {
 	}
 	
 	@Transactional(readOnly = true)   
-	public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {  // metodo para buscar todas as categorias
+	public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
 		Page<Product> list = productRepository.findAll(pageRequest);
 		return list.map(x -> new ProductDTO(x, x.getCategories()));
 	}
