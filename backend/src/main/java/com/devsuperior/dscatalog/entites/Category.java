@@ -12,14 +12,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_category")
-@NoArgsConstructor @AllArgsConstructor
 public class Category implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -73,5 +70,20 @@ public class Category implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Category() {}
+			
+	public Category(Long id, String name, Instant createdAt, Instant updatedAt) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public Category(Long id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 }

@@ -15,14 +15,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_product")
-@AllArgsConstructor @NoArgsConstructor
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -81,4 +78,18 @@ public class Product implements Serializable {
 		return true;
 	}
 
+	public Product(Long id, String name, String description, Double price, String imgUrl, Instant date) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
+		this.date = date;
+	}
+	public Product() {}
+	public Product(Set<Category> categories) {
+		super();
+		this.categories = categories;
+	}
 }
