@@ -46,8 +46,8 @@ public class ProductServiceTests {
 	@Mock
 	private CategoryRepository categoryRepository;
 	
-	private Long existsId;
-	private Long nonExistsId;
+	private Long existingId;
+	private Long nonExistingId;
 	private Long dependentId;
 	private Product product;
 	private Category category;
@@ -56,8 +56,8 @@ public class ProductServiceTests {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		existsId = 1L;
-		nonExistsId = 1000L;
+		existingId = 1L;
+		nonExistingId = 1000L;
 		dependentId = 4L;
 		product = Factory.createProduct();
 		category = Factory.createCategory();
@@ -68,49 +68,49 @@ public class ProductServiceTests {
 		when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
 		when(repository.save(ArgumentMatchers.any())).thenReturn(product);
 		
-		when(repository.findById(existsId)).thenReturn(Optional.of(product));
-		when(repository.findById(nonExistsId)).thenReturn(Optional.empty());
+		when(repository.findById(existingId)).thenReturn(Optional.of(product));
+		when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 		
-		when(repository.getOne(existsId)).thenReturn(product);
-		when(repository.getOne(nonExistsId)).thenThrow(EntityNotFoundException.class);
+		when(repository.getOne(existingId)).thenReturn(product);
+		when(repository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
 		
-		when(categoryRepository.getOne(existsId)).thenReturn(category);
-		when(categoryRepository.getOne(nonExistsId)).thenThrow(EntityNotFoundException.class);
+		when(categoryRepository.getOne(existingId)).thenReturn(category);
+		when(categoryRepository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
 		
-		doNothing().when(repository).deleteById(existsId);
+		doNothing().when(repository).deleteById(existingId);
 	
-		doThrow(ResourceNotFoundException.class).when(repository).findById(nonExistsId);
-		doThrow(ResourceNotFoundException.class).when(repository).deleteById(nonExistsId);
+		doThrow(ResourceNotFoundException.class).when(repository).findById(nonExistingId);
+		doThrow(ResourceNotFoundException.class).when(repository).deleteById(nonExistingId);
 		doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
 	}
 	
 	@Test
 	public void updateShouldThrowResourceNotFoundExceptionWhenIdNotExists() {
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.update(nonExistsId, productDTO);
+			service.update(nonExistingId, productDTO);
 		});	
 	}
 	
 	@Test
 	public void updateShouldReturnProductDTOWhenIdExists() {
-		ProductDTO dto = service.update(existsId, productDTO);		
+		ProductDTO dto = service.update(existingId, productDTO);		
 		Assertions.assertNotNull(dto);	
 	}
 	
 	@Test
 	public void findByIdShouldThrowResourceNotFoundExceptionWhenIdNotExists() {
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.findById(nonExistsId);
+			service.findById(nonExistingId);
 		});	
-		verify(repository, times(1)).findById(nonExistsId);
+		verify(repository, times(1)).findById(nonExistingId);
 	}
 	
 	@Test
 	public void findByIdShouldReturnProductDTOWhenIdExists() {
-		ProductDTO dto = service.findById(existsId);
+		ProductDTO dto = service.findById(existingId);
 		
 		Assertions.assertNotNull(dto);	
-		verify(repository, times(1)).findById(existsId);
+		verify(repository, times(1)).findById(existingId);
 	}
 	
 	@Test
@@ -134,19 +134,18 @@ public class ProductServiceTests {
 	@Test
 	public void deleteShouldThrowResourceNotFoundExceptionWhenIdNotExists() {
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.delete(nonExistsId);
+			service.delete(nonExistingId);
 		});
 		
-		verify(repository).deleteById(nonExistsId);
+		verify(repository).deleteById(nonExistingId);
 	}
 	
 	@Test
 	public void deleteShouldDoNothingWhenIdExists() {
-				
 		Assertions.assertDoesNotThrow(() -> {
-			service.delete(existsId);
+			service.delete(existingId);
 		});
 		
-		verify(repository, times(1)).deleteById(existsId);
+		verify(repository, times(1)).deleteById(existingId);
 	}
 }
