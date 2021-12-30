@@ -34,6 +34,9 @@ public class ProductDTO implements Serializable {
 	
 	private List<CategoryDTO> categories = new ArrayList<>();
 	
+	public ProductDTO() {
+	}
+	
 	public ProductDTO(Product entity) {
 		this.id = entity.getId();
 		this.name = entity.getName();
