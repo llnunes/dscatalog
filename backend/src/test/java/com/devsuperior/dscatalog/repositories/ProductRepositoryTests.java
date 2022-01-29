@@ -16,55 +16,49 @@ import com.devsuperior.dscatalog.factories.Factory;
 public class ProductRepositoryTests {
 
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductRepository repository;
 	
-	private long existsId;
-	private long nonExistsId;
+	private long existingId;
+	private long nonExistingId;
 	private long countTotalProducts;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		existsId = 1l;
-		nonExistsId = 1000l;
-		countTotalProducts = 26l;
-	}
-	@Test
-	public void saveShouldPersistWithAutoincrementWhenIdIsNull () {
-		Product product = Factory.createProduct();
-		product.setId(null);
-		product = productRepository.save(product);
-		
-		Assertions.assertNotNull(product.getId());
-		Assertions.assertEquals(product.getId(), countTotalProducts);
+		existingId = 1L;
+		nonExistingId = 1000L;
+		countTotalProducts = 25L;
 	}
 	
+	@Test
+	public void saveShouldPersistWithAutoincrementWhenIdIsNull() {
+
+		Product product = Factory.createProduct();
+		product.setId(null);
+		
+		product = repository.save(product);
+		Optional<Product> result = repository.findById(product.getId());
+		
+		Assertions.assertNotNull(product.getId());
+		Assertions.assertEquals(countTotalProducts + 1L, product.getId());
+		Assertions.assertTrue(result.isPresent());
+		Assertions.assertSame(result.get(), product);
+	}
 	
 	@Test
 	public void deleteShouldDeleteObjectWhenIdExists() {
-		productRepository.deleteById(existsId);
+		
+		repository.deleteById(existingId);
 
-		Optional<Product> opt = productRepository.findById(existsId);
-
-		Assertions.assertFalse(opt.isPresent());
-	}
-
-	@Test
-	public void deleteShouldThrowEmptyResultDataAccessExceptionWhenIdNotExists() {
-		Assertions.assertThrows(EmptyResultDataAccessException.class, 
-				() -> productRepository.deleteById(nonExistsId));
+		Optional<Product> result = repository.findById(existingId);
+		
+		Assertions.assertFalse(result.isPresent());
 	}
 	
 	@Test
-	public void findByIdShouldReturnObjectWhenIdExists() {
-		Optional<Product> opt = productRepository.findById(existsId);
+	public void deleteShouldThrowEmptyResultDataAccessExceptionWhenIdDoesNotExist() {
 
-		Assertions.assertTrue(opt.isPresent());
-	}
-	
-	@Test
-	public void findByIdShouldReturnEmptyObjectWhenIdExists() {
-		Optional<Product> opt = productRepository.findById(nonExistsId);
-
-		Assertions.assertFalse(opt.isPresent());
+		Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+			repository.deleteById(nonExistingId);			
+		});
 	}
 }
