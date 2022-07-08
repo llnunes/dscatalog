@@ -1,8 +1,14 @@
 import './assets/styles/custom.scss';
 import './App.css';
+import Home from 'pages/Home';
 
 function App() {
-  return <h1>DSCatalog</h1>;
+  return (
+    <>
+      <Home></Home>
+      
+    </>
+  );
 }
 
 export default App;
