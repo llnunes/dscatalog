@@ -9,7 +9,7 @@ const Home = () => {
     <>
         <Navbar></Navbar>
         <div className='home-container'>
-            <div className='home-card'>
+            <div className='base-card home-card'>
                 <div className='home-content-container'>
                     <div>
                         <h1>Conheça o melhor catalogo de produtos</h1>
