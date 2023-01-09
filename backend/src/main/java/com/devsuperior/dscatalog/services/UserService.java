@@ -18,15 +18,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devsuperior.dscatalog.dtos.RoleDTO;
-import com.devsuperior.dscatalog.dtos.UserDTO;
-import com.devsuperior.dscatalog.dtos.UserInsertDTO;
-import com.devsuperior.dscatalog.dtos.UserUpdateDTO;
-import com.devsuperior.dscatalog.entites.Role;
-import com.devsuperior.dscatalog.entites.User;
+import com.devsuperior.dscatalog.dto.RoleDTO;
+import com.devsuperior.dscatalog.dto.UserDTO;
+import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.dto.UserUpdateDTO;
+import com.devsuperior.dscatalog.entities.Role;
+import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.RoleRepository;
 import com.devsuperior.dscatalog.repositories.UserRepository;
-import com.devsuperior.dscatalog.services.exceptions.DataBaseException;
+import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -86,7 +86,7 @@ public class UserService implements UserDetailsService {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataBaseException("Integrity violation");
+			throw new DatabaseException("Integrity violation");
 		}
 	}
 	

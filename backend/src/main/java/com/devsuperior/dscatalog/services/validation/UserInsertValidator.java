@@ -8,8 +8,8 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.devsuperior.dscatalog.dtos.UserInsertDTO;
-import com.devsuperior.dscatalog.entites.User;
+import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.UserRepository;
 import com.devsuperior.dscatalog.resources.exceptions.FieldMessage;
 

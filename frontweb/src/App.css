@@ -1,33 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  margin-bottom: 0;
-}
-
-:root {
-  --color-primary: #4D41C0;
-}
-
 * {
-    box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
-html, body {
-    background-color: #E8E8E8;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0;
+  font-weight: 700;
 }
 
-a, a:hover {
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:hover {
   text-decoration: none;
   color: unset;
 }
 
 .base-card {
-  display: flex;
-  flex-direction: column-reverse;
   background-color: #fff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+}
+
+.base-input {
+  border-radius: 10px;
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: #263238;
+  height: 50px;
+}
+ 
+.base-input::placeholder {
+  color: #9E9E9E;
 }

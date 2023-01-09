@@ -1,4 +1,5 @@
 package com.devsuperior.dscatalog.components;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
-import com.devsuperior.dscatalog.entites.User;
+import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.UserRepository;
 
 @Component

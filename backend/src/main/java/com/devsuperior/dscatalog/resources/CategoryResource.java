@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.devsuperior.dscatalog.dtos.CategoryDTO;
+import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.services.CategoryService;
 
 @RestController
@@ -24,38 +24,37 @@ import com.devsuperior.dscatalog.services.CategoryService;
 public class CategoryResource {
 
 	@Autowired
-	private CategoryService categoryService;
-
+	private CategoryService service;
+	
 	@GetMapping
 	public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
-		Page<CategoryDTO> list = categoryService.findAllPaged(pageable);
-
+		Page<CategoryDTO> list = service.findAllPaged(pageable);		
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> findById(@PathVariable Long id) {
-		CategoryDTO dto = categoryService.findById(id);
-		return ResponseEntity.ok(dto);
+	public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+		CategoryDTO dto = service.findById(id);
+		return ResponseEntity.ok().body(dto);
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody CategoryDTO dto) {
-		dto = categoryService.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-
+	public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
+		dto = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
-		dto = categoryService.update(id, dto);
-		return ResponseEntity.ok(dto);
+	public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
+		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
-		categoryService.delete(id);
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-}
+} 
