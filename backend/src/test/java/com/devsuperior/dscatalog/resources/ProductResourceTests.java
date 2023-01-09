@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.services.ProductService;
-import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
+import com.devsuperior.dscatalog.services.exceptions.DataBaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dscatalog.tests.Factory;
 import com.devsuperior.dscatalog.tests.TokenUtil;
@@ -83,7 +83,7 @@ public class ProductResourceTests {
 		
 		doNothing().when(service).delete(existingId);
 		doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
-		doThrow(DatabaseException.class).when(service).delete(dependentId);
+		doThrow(DataBaseException.class).when(service).delete(dependentId);
 	}
 	
 	@Test

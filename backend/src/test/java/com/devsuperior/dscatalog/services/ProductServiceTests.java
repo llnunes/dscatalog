@@ -24,7 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
-import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
+import com.devsuperior.dscatalog.services.exceptions.DataBaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dscatalog.tests.Factory;
 
@@ -78,7 +78,7 @@ public class ProductServiceTests {
 	@Test
 	public void deleteShouldThrowDatabaseExceptionWhenDependentId() {
 		
-		Assertions.assertThrows(DatabaseException.class, () -> {
+		Assertions.assertThrows(DataBaseException.class, () -> {
 			service.delete(dependentId);
 		});
 		
